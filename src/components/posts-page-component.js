@@ -7,6 +7,10 @@ import likeActive from "../assets/images/like-active.svg";
 import likeNotActive from "../assets/images/like-not-active.svg";
 
 export function renderPostsPageComponent({ appEl }) {
+  // Отладочная информация о текущем пользователе
+  console.log("Текущий пользователь:", state.user);
+  console.log("Все посты:", state.posts);
+
   const postsHtml = state.posts.length
     ? state.posts
         .map((post) => {
@@ -30,7 +34,17 @@ export function renderPostsPageComponent({ appEl }) {
           }
 
           // Проверяем, является ли текущий пользователь автором поста
-          const isAuthor = state.user && post.user.id === state.user.id;
+          const isAuthor = state.user && post.user.id === state.user._id;
+
+          // Отладочная информация
+          console.log("Проверка авторства:", {
+            currentUser: state.user ? state.user._id : "не авторизован",
+            postAuthor: post.user.id,
+            isAuthor: isAuthor,
+            postId: post.id,
+            postUser: post.user,
+            currentUserFull: state.user,
+          });
 
           return `
           <li class="post">

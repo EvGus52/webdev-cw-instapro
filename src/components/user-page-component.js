@@ -31,6 +31,14 @@ export function renderUserPostsPageComponent({ appEl }) {
           // Проверяем, является ли текущий пользователь автором поста
           const isAuthor = user && post.user.id === user.id;
 
+          // Отладочная информация
+          console.log("Проверка авторства (страница пользователя):", {
+            currentUser: user ? user.id : "не авторизован",
+            postAuthor: post.user.id,
+            isAuthor: isAuthor,
+            postId: post.id,
+          });
+
           return `
             <li class="post">
               <div class="post-header" data-user-id="${post.user.id}">
