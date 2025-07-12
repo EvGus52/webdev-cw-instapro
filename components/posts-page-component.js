@@ -86,7 +86,7 @@ export function renderPostsPageComponent({ appEl }) {
               return {
                 ...p,
                 isLiked: updatedPost.post.isLiked,
-                likes: updatedPost.post.likes.length,
+                likes: updatedPost.post.likes,
               };
             }
             return p;

@@ -51,6 +51,36 @@ export function addPost({ token, description, imageUrl }) {
     });
 }
 
+export function deletePost({ token, postId }) {
+  if (!postId) {
+    throw new Error("Необходимо передать ID поста для удаления");
+  }
+
+  return fetch(`${postsHost}/${postId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((response) => {
+      console.log("Статус ответа при удалении:", response.status);
+      if (!response.ok) {
+        return response.text().then((text) => {
+          throw new Error(`Ошибка при удалении поста: ${text}`);
+        });
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Пост успешно удален:", data);
+      return data;
+    })
+    .catch((error) => {
+      console.error("Ошибка при удалении поста:", error);
+      throw error;
+    });
+}
+
 export function registerUser({ login, password, name, imageUrl }) {
   return fetch(baseHost + "/api/user", {
     method: "POST",
