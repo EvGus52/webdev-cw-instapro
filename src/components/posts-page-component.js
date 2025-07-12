@@ -1,7 +1,7 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import * as state from "../index.js";
-import { toggleLike } from "../api.js";
+import { toggleLike, deletePost } from "../api.js";
 import { formatDate } from "../index.js";
 import likeActive from "../assets/images/like-active.svg";
 import likeNotActive from "../assets/images/like-not-active.svg";
@@ -28,11 +28,20 @@ export function renderPostsPageComponent({ appEl }) {
           } else if (typeof post.likes === "number") {
             likesText = post.likes > 0 ? `еще ${post.likes}` : "0";
           }
+
+          // Проверяем, является ли текущий пользователь автором поста
+          const isAuthor = state.user && post.user.id === state.user.id;
+
           return `
           <li class="post">
             <div class="post-header" data-user-id="${post.user.id}">
               <img src="${post.user.imageUrl}" class="post-header__user-image">
               <p class="post-header__user-name">${post.user.name}</p>
+              ${
+                isAuthor
+                  ? `<button class="delete-post-btn" data-post-id="${post.id}" title="Удалить пост">×</button>`
+                  : ""
+              }
             </div>
             <div class="post-image-container">
               <img class="post-image" src="${post.imageUrl}">
@@ -66,6 +75,32 @@ export function renderPostsPageComponent({ appEl }) {
   `;
 
   appEl.innerHTML = appHtml;
+
+  // Обработчики удаления постов
+  document.querySelectorAll(".delete-post-btn").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation(); // Предотвращаем всплытие события
+      const postId = button.dataset.postId;
+
+      if (confirm("Вы уверены, что хотите удалить этот пост?")) {
+        deletePost({
+          postId,
+          token: state.getToken(),
+        })
+          .then(() => {
+            // Удаляем пост из массива
+            const updatedPosts = state.posts.filter((p) => p.id !== postId);
+            state.posts.splice(0, state.posts.length, ...updatedPosts);
+            renderPostsPageComponent({ appEl });
+          })
+          .catch((error) => {
+            console.error("Ошибка при удалении поста:", error);
+            alert(`Ошибка при удалении поста: ${error.message}`);
+          });
+      }
+    });
+  });
+
   document.querySelectorAll(".like-button").forEach((button) => {
     button.addEventListener("click", () => {
       const postId = button.dataset.postId;

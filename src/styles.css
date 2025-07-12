@@ -134,6 +134,7 @@ body {
   padding: 8px;
   border-radius: var(--border-radius);
   transition: var(--transition);
+  position: relative;
 }
 
 .post-header:hover {
@@ -160,10 +161,43 @@ body {
   font-weight: 600;
   color: var(--gray-800);
   transition: var(--transition);
+  flex: 1;
 }
 
 .post-header:hover .post-header__user-name {
   color: var(--primary-color);
+}
+
+/* Кнопка удаления поста */
+.delete-post-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--danger-color);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: var(--transition);
+  opacity: 0.7;
+}
+
+.delete-post-btn:hover {
+  background-color: #f8d7da;
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.delete-post-btn:active {
+  transform: translateY(-50%) scale(0.95);
 }
 
 /* Контейнер изображения поста */
@@ -556,6 +590,13 @@ body {
 
   .form {
     padding: 16px;
+  }
+
+  .delete-post-btn {
+    right: 4px;
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
   }
 }
 
