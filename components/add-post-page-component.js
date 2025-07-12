@@ -1,5 +1,6 @@
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
+import { sanitize } from "../api.js";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
@@ -40,9 +41,9 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
     }
 
     document.getElementById("add-button").addEventListener("click", () => {
-      const description = document
-        .getElementById("post-description")
-        .value.trim();
+      const description = sanitize(
+        document.getElementById("post-description").value.trim()
+      );
 
       if (!previewUrl) {
         alert("Пожалуйста, выберите фото");

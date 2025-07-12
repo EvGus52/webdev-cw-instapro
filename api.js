@@ -2,6 +2,10 @@ const personalKey = "evgen";
 const baseHost = "https://webdev-hw-api.vercel.app";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
+export const sanitize = (value) => {
+  return value.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+};
+
 export function getPosts({ token }) {
   return fetch(postsHost, {
     method: "GET",
