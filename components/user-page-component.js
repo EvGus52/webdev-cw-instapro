@@ -1,13 +1,33 @@
 import { renderHeaderComponent } from "./header-component.js";
 import { posts } from "../index.js";
-import { likePost, dislikePost } from "../api.js";
+import { toggleLike } from "../api.js";
 import { getToken } from "../index.js";
 
 export function renderUserPostsPageComponent({ appEl }) {
   const postsHtml = posts.length
     ? posts
         .map((post) => {
-          const formattedDate = new Date(post.createdAt).toLocaleString();
+          const formattedDate = post.createdAt
+            ? new Date(post.createdAt).toLocaleString()
+            : "";
+
+          // Обработка лайков
+          let likesText = "";
+          if (post.likes && Array.isArray(post.likes)) {
+            const likesCount = post.likes.length;
+            const likerNames = post.likes.map((like) => like.name);
+
+            if (likesCount === 0) {
+              likesText = "0";
+            } else if (likesCount === 1) {
+              likesText = likerNames[0];
+            } else {
+              likesText = `${likerNames[0]} и еще ${likesCount - 1}`;
+            }
+          } else if (typeof post.likes === "number") {
+            likesText = post.likes > 0 ? `еще ${post.likes}` : "0";
+          }
+
           return `
             <li class="post">
               <div class="post-image-container">
@@ -22,9 +42,7 @@ export function renderUserPostsPageComponent({ appEl }) {
                     }">
                 </button>
                 <p class="post-likes-text">
-                  Нравится: <strong>${
-                    Array.isArray(post.likes) ? post.likes.length : post.likes
-                  }</strong>
+                  Нравится: <strong>${likesText}</strong>
                 </p>
               </div>
               <p class="post-text">${post.description}</p>
@@ -61,16 +79,28 @@ export function renderUserPostsPageComponent({ appEl }) {
       const post = posts.find((p) => p.id === postId);
       if (!post) return;
 
-      const action = post.isLiked ? dislikePost : likePost;
-
-      action({ postId, token: getToken() })
+      toggleLike({
+        postId,
+        token: getToken(),
+        isLiked: post.isLiked,
+      })
         .then((updatedPost) => {
-          const index = posts.findIndex((p) => p.id === postId);
-          posts[index] = updatedPost.post;
+          const updatedPosts = posts.map((p) => {
+            if (p.id === postId) {
+              return {
+                ...p,
+                isLiked: updatedPost.post.isLiked,
+                likes: updatedPost.post.likes,
+              };
+            }
+            return p;
+          });
+          posts.splice(0, posts.length, ...updatedPosts);
           renderUserPostsPageComponent({ appEl });
         })
         .catch((error) => {
           console.error("Ошибка при обновлении лайка:", error);
+          alert("Только авторизованные пользователи могут лайкать посты");
         });
     });
   });
