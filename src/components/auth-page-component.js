@@ -103,7 +103,9 @@ export function renderAuthPageComponent({ appEl, setUser }) {
       if (isLoginMode) {
         // Обработка входа
         const login = sanitize(document.getElementById("login-input").value);
-        const password = sanitize(document.getElementById("password-input").value);
+        const password = sanitize(
+          document.getElementById("password-input").value
+        );
 
         if (!login) {
           alert("Введите логин");
@@ -127,7 +129,9 @@ export function renderAuthPageComponent({ appEl, setUser }) {
         // Обработка регистрации
         const login = sanitize(document.getElementById("login-input").value);
         const name = sanitize(document.getElementById("name-input").value);
-        const password = sanitize(document.getElementById("password-input").value);
+        const password = sanitize(
+          document.getElementById("password-input").value
+        );
 
         if (!name) {
           alert("Введите имя");

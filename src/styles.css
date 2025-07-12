@@ -1,0 +1,619 @@
+/* Основные переменные и настройки */
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0056b3;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --white: #ffffff;
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+  --border-radius: 8px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --box-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+}
+
+/* Сброс стилей и базовые настройки */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--gray-800);
+  background-color: var(--gray-100);
+  margin: 0;
+  padding: 0;
+}
+
+/* Контейнер страницы */
+.page-container {
+  padding: 0 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: var(--white);
+  min-height: 100vh;
+  box-shadow: var(--box-shadow);
+}
+
+/* Заголовок страницы */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 20px 16px;
+  margin-left: -20px;
+  margin-right: -20px;
+  background-color: var(--white);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 130px;
+  color: var(--primary-color);
+  transition: var(--transition);
+}
+
+.logo:hover {
+  color: var(--primary-hover);
+  transform: scale(1.05);
+}
+
+.header-container {
+  margin-bottom: 8px;
+}
+
+.header-button {
+  padding: 8px 16px;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  color: var(--gray-700);
+}
+
+.header-button:hover {
+  background-color: var(--gray-100);
+  color: var(--primary-color);
+}
+
+.logout-button {
+  width: 130px;
+  text-align: right;
+  color: var(--danger-color);
+}
+
+.logout-button:hover {
+  background-color: #f8d7da;
+  color: var(--danger-color);
+}
+
+/* Список постов */
+.posts {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 24px;
+}
+
+/* Заголовок поста */
+.post-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  position: relative;
+}
+
+.post-header:hover {
+  background-color: var(--gray-100);
+  transform: translateX(4px);
+}
+
+.post-header__user-image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 12px;
+  border: 2px solid var(--gray-200);
+  transition: var(--transition);
+}
+
+.post-header:hover .post-header__user-image {
+  border-color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+.post-header__user-name {
+  font-weight: 600;
+  color: var(--gray-800);
+  transition: var(--transition);
+  flex: 1;
+}
+
+.post-header:hover .post-header__user-name {
+  color: var(--primary-color);
+}
+
+/* Кнопка удаления поста */
+.delete-post-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--danger-color);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: var(--transition);
+  opacity: 0.7;
+}
+
+.delete-post-btn:hover {
+  background-color: #f8d7da;
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.delete-post-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Контейнер изображения поста */
+.post-image-container {
+  margin-left: -20px;
+  margin-right: -20px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--gray-200);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+}
+
+.post-image-container:hover {
+  box-shadow: var(--box-shadow-hover);
+}
+
+.post-image {
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.post-image:hover {
+  transform: scale(1.02);
+}
+
+/* Секция лайков */
+.post-likes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 16px 0;
+  padding: 8px 0;
+}
+
+.like-button {
+  border: none;
+  background-color: transparent;
+  padding: 8px;
+  padding-left: 0px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  border-radius: var(--border-radius);
+}
+
+.like-button:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+.like-button:active {
+  transform: scale(0.95);
+}
+
+.like-button img {
+  transition: var(--transition);
+}
+
+.like-button:hover img {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.post-likes-text {
+  margin-left: 8px;
+  font-size: 14px;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+.post-likes-text strong {
+  color: var(--gray-800);
+}
+
+/* Текст поста */
+.user-name {
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.post-text {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 12px 0;
+  color: var(--gray-700);
+  padding: 12px;
+  background-color: var(--gray-100);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--primary-color);
+}
+
+.post-date {
+  color: var(--gray-500);
+  font-size: 12px;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Заголовок пользователя */
+.posts-user-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--primary-color), var(--info-color));
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  color: var(--white);
+}
+
+.posts-user-header__user-image {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 16px;
+  border: 3px solid var(--white);
+  box-shadow: var(--box-shadow);
+}
+
+.posts-user-header__user-name {
+  font-size: 28px;
+  line-height: 35px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Страница загрузки */
+.loading-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  flex-direction: column;
+}
+
+.loading-page::after {
+  content: "";
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--gray-200);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Иконка добавления поста */
+.add-post-sign {
+  background-image: url("data:image/svg+xml,%3Csvg id='Layer_1' data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 122.88 122.88'%3E%3Ctitle%3Eadd%3C/title%3E%3Cpath d='M61.44,0A61.46,61.46,0,1,1,18,18,61.25,61.25,0,0,1,61.44,0ZM88.6,56.82v9.24a4,4,0,0,1-4,4H70V84.62a4,4,0,0,1-4,4H56.82a4,4,0,0,1-4-4V70H38.26a4,4,0,0,1-4-4V56.82a4,4,0,0,1,4-4H52.84V38.26a4,4,0,0,1,4-4h9.24a4,4,0,0,1,4,4V52.84H84.62a4,4,0,0,1,4,4Zm8.83-31.37a50.92,50.92,0,1,0,14.9,36,50.78,50.78,0,0,0-14.9-36Z'/%3E%3C/svg%3E");
+  height: 30px;
+  width: 30px;
+  transition: var(--transition);
+}
+
+.add-post-sign:hover {
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* Формы */
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.form-title {
+  font-size: 28px;
+  line-height: 35px;
+  text-align: center;
+  margin-bottom: 24px;
+  color: var(--gray-800);
+  font-weight: 700;
+}
+
+.form-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-error {
+  color: var(--danger-color);
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: var(--border-radius);
+  padding: 12px;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.form-footer {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-footer-title {
+  text-align: center;
+  color: var(--gray-600);
+}
+
+/* Загрузка изображений */
+.file-upload-image-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background-color: var(--gray-100);
+  border-radius: var(--border-radius);
+  border: 2px dashed var(--gray-300);
+}
+
+.file-upload-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+}
+
+.file-upload-image:hover {
+  transform: scale(1.05);
+  box-shadow: var(--box-shadow-hover);
+}
+
+.file-upload-label {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: center;
+  padding: 16px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+}
+
+.file-upload-label:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-hover);
+}
+
+.file-upload-remove-button {
+  background-color: var(--danger-color);
+  color: var(--white);
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+}
+
+.file-upload-remove-button:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+}
+
+/* Кнопки */
+.button {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-hover);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button:disabled {
+  background-color: var(--gray-400);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.button.center {
+  align-self: center;
+}
+
+/* Поля ввода */
+.input {
+  padding: 12px 16px;
+  border: 2px solid var(--gray-300);
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  transition: var(--transition);
+  background-color: var(--white);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.input::placeholder {
+  color: var(--gray-500);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+/* Ссылки */
+.link-button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: inherit;
+  transition: var(--transition);
+}
+
+.link-button:hover {
+  color: var(--primary-hover);
+  text-decoration: none;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 0 10px;
+  }
+
+  .page-header {
+    padding: 16px 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+  .post-image-container {
+    margin-left: -10px;
+    margin-right: -10px;
+    height: 300px;
+  }
+
+  .posts-user-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .posts-user-header__user-image {
+    margin-right: 0;
+  }
+
+  .form {
+    padding: 16px;
+  }
+
+  .delete-post-btn {
+    right: 4px;
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 24px;
+  }
+
+  .post-header__user-name {
+    font-size: 14px;
+  }
+
+  .posts-user-header__user-name {
+    font-size: 24px;
+  }
+
+  .form-title {
+    font-size: 24px;
+  }
+}
